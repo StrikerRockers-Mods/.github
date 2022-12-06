@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       mod_name:
-      	required: true
+        required: true
         type: string
       minecraft_version:
         required: true
@@ -45,7 +45,7 @@ jobs:
         with: { fetch-depth: 0 }
       - name: "Set up JDK"
         uses: actions/setup-java@v2
-        with: { distribution: "temurin", java-version: ${{ inputs.java-version }} }
+        with: { distribution: "temurin", java-version: "${{ inputs.java-version }}" }
       - name: Build with Gradle
         uses: burrunan/gradle-cache-action@v1
         id: build
