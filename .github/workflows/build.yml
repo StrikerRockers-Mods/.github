@@ -29,3 +29,4 @@ jobs:
           path: |
             Forge/build/libs/
             Fabric/build/libs/
+            build/libs/
