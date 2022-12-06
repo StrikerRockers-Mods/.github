@@ -1,0 +1,31 @@
+name: build
+on:
+  workflow_call::
+    inputs:
+      java-version:
+        type: string
+        default: 17
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: "Set up JDK"
+        uses: actions/setup-java@v2
+        with: { distribution: "temurin", java-version: ${{ inputs.java-version }} }
+      - name: Build with Gradle
+        uses: burrunan/gradle-cache-action@v1
+        id: build
+        with:
+          arguments: "build"
+          gradle-version: "wrapper"
+      - name: capture build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Artifacts
+          path: |
+            Forge/build/libs/
+            Fabric/build/libs/
