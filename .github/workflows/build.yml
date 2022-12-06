@@ -1,6 +1,6 @@
 name: build
 on:
-  workflow_call::
+  workflow_call:
     inputs:
       java-version:
         type: string
@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
       - name: "Set up JDK"
         uses: actions/setup-java@v2
-        with: { distribution: "temurin", java-version: ${{ inputs.java-version }} }
+        with: { distribution: "temurin", java-version: "${{ inputs.java-version }}" }
       - name: Build with Gradle
         uses: burrunan/gradle-cache-action@v1
         id: build
