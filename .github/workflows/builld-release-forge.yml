@@ -43,7 +43,7 @@ jobs:
         with:
           files: "build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           gzip: false
-          name: "${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.version }}"
+          name: "${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}"
           token: "${{ secrets.GITHUB_TOKEN }}"
       - name: "Publish-Forge"
         uses: Kir-Antipov/mc-publish@v3.2
