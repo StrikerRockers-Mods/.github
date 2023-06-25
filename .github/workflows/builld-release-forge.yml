@@ -27,16 +27,15 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
-        with: { fetch-depth: 0 }
+        with: { fetch-depth: 1 }
       - name: "Set up JDK"
         uses: actions/setup-java@v2
         with: { distribution: "temurin", java-version: "${{ inputs.java-version }}" }
+      - name: Give gradle exec permission
+        run: "chmod +x gradlew"
       - name: Build with Gradle
-        uses: burrunan/gradle-cache-action@v1
-        id: build
-        with:
-          arguments: "setupGithubActions build"
-          gradle-version: "wrapper"
+        id: build        
+        run: "./gradlew setupGithubActions build"
       - name: "Create a Release"
         id: create_release
         uses: meeDamian/github-release@2.0
