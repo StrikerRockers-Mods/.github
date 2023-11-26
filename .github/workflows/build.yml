@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with: { fetch-depth: 1 }
       - name: "Set up JDK"
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with: { distribution: "temurin", java-version: "${{ inputs.java-version }}" }
       - name: Give gradle exec permission
         run: "chmod +x gradlew"
@@ -21,7 +21,7 @@ jobs:
         id: build        
         run: "./gradlew setupGithubActions build"
       - name: capture build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Artifacts
           path: |
