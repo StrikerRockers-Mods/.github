@@ -8,12 +8,9 @@ on:
       forge-dependencies:
         required: false
         type: string
-      fabric-dependencies:
-        required: false
-        type: string
-      fabric-cf-id:
-        required: true
-        type: string
+      neoforge-dependencies:
+          required: false
+          type: string
       modrinth-id:
         required: true
         type: string
@@ -36,17 +33,21 @@ jobs:
         with: { fetch-depth: 1 }
       - name: "Set up JDK"
         uses: actions/setup-java@v2
-        with: { distribution: "temurin", java-version: "${{ inputs.java-version }}" }
+        with:
+          {
+            distribution: "temurin",
+            java-version: "${{ inputs.java-version }}",
+          }
       - name: Give gradle exec permission
         run: "chmod +x gradlew"
       - name: Build with Gradle
-        id: build        
+        id: build
         run: "./gradlew setupGithubActions build"
       - name: "Create a Release"
         id: create_release
         uses: meeDamian/github-release@2.0
         with:
-          files: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          files: "build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           gzip: false
           name: "${{ steps.build.outputs.mod_name }}-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}"
           token: "${{ secrets.GITHUB_TOKEN }}"
@@ -59,21 +60,21 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           loaders: forge
           version: ${{ steps.build.outputs.version }}
-          files: "Forge/build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          files: "build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           name: "${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           dependencies: ${{ inputs.forge-dependencies }}
-      - name: "Publish-Fabric-Curseforge"
+      - name: "Publish-Neoforge"
         uses: Kir-Antipov/mc-publish@v3.3
         with:
-          curseforge-id: ${{ inputs.fabric-cf-id }}
+          curseforge-id: ${{ inputs.forge-cf-id }}
           curseforge-token: ${{ secrets.CF_API_TOKEN }}
           modrinth-id: ${{ inputs.modrinth-id }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          loaders: fabric
+          loaders: neoforge
           version: ${{ steps.build.outputs.version }}
-          files: "Fabric/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          name: "${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          dependencies: ${{ inputs.fabric-dependencies }}
+          files: "build/libs/${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          name: "${{ steps.build.outputs.mod_name }}-forge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          dependencies: ${{ inputs.neoforge-dependencies }}
       - name: "Build Success"
         id: build-success
         uses: itsmeow/webhook-action@master

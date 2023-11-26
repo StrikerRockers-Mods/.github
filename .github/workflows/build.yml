@@ -30,3 +30,4 @@ jobs:
             build/libs/
             forge/build/libs/
             fabric/build/libs/
+            neoforge/build/libs/
