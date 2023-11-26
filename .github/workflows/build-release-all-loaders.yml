@@ -86,8 +86,8 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           loaders: neoforge
           version: ${{ steps.build.outputs.version }}
-          files: "neoforge/build/libs/${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
-          name: "${{ steps.build.outputs.mod_name }}-fabric-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          files: "neoforge/build/libs/${{ steps.build.outputs.mod_name }}-neoforge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
+          name: "${{ steps.build.outputs.mod_name }}-neoforge-${{ steps.build.outputs.minecraft_version }}-${{ steps.build.outputs.version }}.jar"
           dependencies: ${{ inputs.neoforge-dependencies }}
       - name: "Build Success"
         id: build-success
